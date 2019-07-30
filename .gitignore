@@ -1,0 +1,29 @@
+# Environments
+httpmon_venv/
+
+# Distribution / packaging
+.Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+*.egg-info/
+eggs/
+.eggs/
+.mypy_cache/
+dist/
+build/
+
+# Mac
+.DS_Store
+Icon
+
+# Testing
+.coverage
+.cache
+coverage.xml
+.coverage.*
+*.cover
+junit_results.xml
+coverage/
+.pytest_cache/
