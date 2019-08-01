@@ -9,4 +9,8 @@ setup(
     author_email='contact@fernandogr.com',
     packages=find_packages(where='src', exclude=['tests']),
     test_suite='tests',
+    entry_points='''
+        [console_scripts]
+        httpmon=httpmon.cli:httpmon_cli
+    '''
 )

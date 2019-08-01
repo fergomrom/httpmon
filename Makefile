@@ -7,12 +7,20 @@ install: init
 install-dev: init
 	source ./httpmon_venv/bin/activate && pip install -r dev-requirements.in
 
+clean:
+	rm -rf `find . -type d -name ".pytest_cache"`
+	rm -rf `find . -type d -name "*.eggs"`
+	rm -rf `find . -type d -name "*.egg-info"`
+	rm -rf `find . -type d -name "__pycache__"`
+	rm -rf `find . -type f -name "*.pyc"`
+	rm -rf `find . -type f -name "*.pyo"`
+
 lint:
 	echo "Running isort"
-	isort --recursive --diff --quiet --check src tests || exit 1
+	isort --recursive --diff --quiet --check httpmon tests || exit 1
 
 	echo "Running flake8"
-	flake8 --config .flake8.ini src tests || exit 1
+	flake8 --config .flake8.ini httpmon tests || exit 1
 
 	echo "Running pydocstyle"
 	pydocstyle || exit 1

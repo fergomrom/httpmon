@@ -1,0 +1,2 @@
+class UserEndedSession(Exception):
+    pass
