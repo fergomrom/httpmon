@@ -8,11 +8,12 @@ It displays some interesting metrics as most returned sections or most seen IP a
 
 The application was built using Python 3. The terminal graphs are done with the built-in python library [curses](https://docs.python.org/3/library/curses.html).
 
-## Requirements
+## How to run
+
+#### Requirements
 
 - Python 3.6.4
 
-## How to run
 > **WARNING**: It is recommended to run this tool in a terminal in full screen mode, or at least with enough space to make all the panes visible.
 
 HTTPMon can be installed through pip. For this, a virtual environment is recommended.
@@ -50,7 +51,7 @@ Options:
   --refresh-frequency INTEGER  Refresh frequency in seconds.
   --included-metrics TEXT      Comma separated list of displayed metrics.
                                [default:
-                               section,remotehost,status_code,method,summary]
+                               section,ip_address,status_code,method,summary]
   --help                       Show this message and exit.
 ```
 

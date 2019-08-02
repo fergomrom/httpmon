@@ -20,6 +20,8 @@ class MetricOccurences(MetricInterface):
     def add_element(self, log_line):
         if self.metric_key in log_line:
             self.metrics_data[log_line[self.metric_key]] += 1
+        else:
+            self.metrics_data['unknown'] += 1
 
     def get_sorted_data(self):
         return sorted(self.metrics_data.items(), key=lambda x: x[1], reverse=True)
@@ -40,7 +42,9 @@ class MetricPercentage(MetricInterface):
     def add_element(self, log_line):
         if self.metric_key in log_line:
             self.metrics_data[log_line[self.metric_key]] += 1
-            self.total += 1
+        else:
+            self.metrics_data['unknown'] += 1
+        self.total += 1
 
     def get_percentages(self):
         return {key: f'{(value / self.total) * 100:.2f}%' for key, value in self.metrics_data.items()}
@@ -61,10 +65,10 @@ class SectionMetric(MetricOccurences):
         self.metric_key = 'section'
 
 
-class HostMetric(MetricOccurences):
+class IPMetric(MetricOccurences):
     def __init__(self):
-        super(HostMetric, self).__init__()
-        self.metric_key = 'remotehost'
+        super(IPMetric, self).__init__()
+        self.metric_key = 'ip_address'
 
 
 class StatusCodeMetric(MetricPercentage):

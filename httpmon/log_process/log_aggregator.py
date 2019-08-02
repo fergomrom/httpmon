@@ -8,7 +8,7 @@ class LogAggregator:
         """Keep track of all the metrics data and aggregates them together.
 
         Params:
-            - included_metrics: list. Example: ['section', 'remotehost', 'summary']
+            - included_metrics: list. Example: ['section', 'ip_address', 'summary']
         """
         self.included_metrics = included_metrics
         self.metrics = self._initialize_metrics()

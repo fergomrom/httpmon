@@ -2,6 +2,8 @@ import os
 import re
 from datetime import datetime
 
+from httpmon.exceptions import InvalidLogPath
+
 
 class LogParser:
     """Parse a HTTP access log with the format defined in https://www.w3.org/Daemon/User/Config/Logging.html.
@@ -11,8 +13,9 @@ class LogParser:
         127.0.0.1 - jill [09/May/2018:16:00:41 +0000] "GET /api/user HTTP/1.0" 200 234
     """
     regex_expression = (
-        r"(?P<remotehost>(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}"
-        r"(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).*\w*) "
+        r"(?P<ip_address>(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}"
+        r"(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)) (?:.*) "
+        r"(?P<remotehost>\w*) "
         r"\[(?P<datetime>.*)] "
         r"\"(?P<method>[A-Z]*) (?P<section>/\w*)(?P<subsection>/\w*)?.*\" "
         r"(?P<status_code>\d{3}) "
@@ -21,7 +24,10 @@ class LogParser:
     date_format = '%d/%b/%Y:%H:%M:%S %z'
 
     def __init__(self, file_dir: str):
-        self.file_handler = open(file_dir, 'r')
+        try:
+            self.file_handler = open(file_dir, 'r')
+        except FileNotFoundError:
+            raise InvalidLogPath()
         self.file_handler.seek(0, os.SEEK_END)
         self.regex = re.compile(self.regex_expression)
 

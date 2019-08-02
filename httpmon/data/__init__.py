@@ -1,5 +1,5 @@
 from httpmon.data.alerts import RequestsAlert
-from httpmon.data.metrics import (HostMetric, MethodMetric, MetricSummary,
+from httpmon.data.metrics import (IPMetric, MethodMetric, MetricSummary,
                                   SectionMetric, StatusCodeMetric)
 
 available_metrics = {
@@ -7,9 +7,9 @@ available_metrics = {
         'class': SectionMetric,
         'description': 'Sections with most hits',
     },
-    'remotehost': {
-        'class': HostMetric,
-        'description': 'Remote IP and hostnames with most hits',
+    'ip_address': {
+        'class': IPMetric,
+        'description': 'IP addresses',
     },
     'status_code': {
         'class': StatusCodeMetric,

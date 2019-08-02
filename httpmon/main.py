@@ -1,14 +1,18 @@
+import logging
 import sys
 import time
 from typing import List
 
 from httpmon.data import available_metrics
 from httpmon.data.alerts import RequestsAlert
-from httpmon.exceptions import UserEndedSession
+from httpmon.exceptions import InvalidLogPath, UserEndedSession
 from httpmon.log_process.log_aggregator import LogAggregator
 from httpmon.log_process.log_parser import LogParser
 from httpmon.outputs.terminal_ui import TerminalUI
 from httpmon.utils import Counter
+
+logging.basicConfig(level=logging.INFO)
+LOGGER = logging.getLogger(__name__)
 
 
 class HTTPMonCLI:
@@ -18,9 +22,14 @@ class HTTPMonCLI:
             if metric in included_metrics
         }
 
+        try:
+            self.log_file = LogParser(log_dir)
+        except InvalidLogPath:
+            LOGGER.error(f'Invalid log file {log_dir}')
+            sys.exit()
+
         self.counter = Counter(refresh_frequency)
         self.ui = TerminalUI(metrics_with_desc)
-        self.log_file = LogParser(log_dir)
         self.log_aggregator = LogAggregator(included_metrics)
         self.requests_alert = RequestsAlert(max_requests)
 

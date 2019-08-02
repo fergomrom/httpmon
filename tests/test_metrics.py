@@ -47,7 +47,7 @@ class TestMetricOccurences:
 
         metric.add_element(fake_element)
 
-        assert not metric.metrics_data
+        assert metric.metrics_data == {'unknown': 1}
 
     def test_get_sorted_data(self):
         metric = MetricOccurences()
@@ -152,7 +152,7 @@ class TestMetricPercentage:
 
         metric.add_element(fake_element)
 
-        assert not metric.metrics_data
+        assert metric.metrics_data == {'unknown': 1}
 
     def test_get_percentages(self):
         metric = MetricPercentage()

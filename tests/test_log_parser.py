@@ -3,9 +3,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from httpmon.exceptions import InvalidLogPath
 from httpmon.log_process.log_parser import LogParser
 
-expected_parsed_fields = ['remotehost', 'datetime', 'method', 'section', 'subsection', 'status_code', 'bytes']
+expected_parsed_fields = [
+    'ip_address', 'remotehost', 'datetime', 'method', 'section', 'subsection', 'status_code', 'bytes'
+]
 
 
 class TestLogParser:
@@ -27,6 +30,10 @@ class TestLogParser:
             assert list(line.keys()) == expected_parsed_fields
             assert isinstance(line['datetime'], datetime)
             assert line['section'] == '/fake_section'
+
+    def test_error_file(self):
+        with pytest.raises(InvalidLogPath):
+            LogParser('/fake/dir/access.log')
 
     @patch('httpmon.log_process.log_parser.open')
     @pytest.mark.parametrize('file_content', [
