@@ -83,4 +83,7 @@ $ make lint
 ## TODOs and improvements
 
 - In order to avoid memory issues, all the live traffic information is erased after every refresh. It would be easy to add functionality to send this information to some data layer, where old requests can be queried.
-- The data parsing-aggregation and UI parts are decoupled in purpose, leaving the option of having other consumers as a web frontend or an API that returns the traffic data.
+- The data parsing-aggregation and UI parts are decoupled in purpose, leaving the option of implementing other consumers as an API that returns the traffic data or a web frontend.
+- If the traffic increases, some multithreading could be added to handle different parsing-aggregation processes in parallel.
+- Allow automatic log rotation.
+- Add CICD, automating the tests and linter, tagging new versions and uploading the package to a repository (artifactory).
