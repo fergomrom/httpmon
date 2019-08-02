@@ -2,7 +2,7 @@ init:
 	python -m venv httpmon_venv
 
 install: init
-	source ./httpmon_venv/bin/activate &&  pip install -r requirements.in && pip install -e .
+	source ./httpmon_venv/bin/activate && pip install -e .
 
 install-dev: init
 	source ./httpmon_venv/bin/activate && pip install -r dev-requirements.in

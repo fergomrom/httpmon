@@ -1,5 +1,8 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
+install_requires = [
+    'click==7.0',
+],
 
 setup(
     name='httpmon',
@@ -7,7 +10,7 @@ setup(
     description='HTTP log monitoring console program',
     author='Fernando Gomez',
     author_email='contact@fernandogr.com',
-    packages=find_packages(where='src', exclude=['tests']),
+    install_requires=install_requires,
     test_suite='tests',
     entry_points='''
         [console_scripts]

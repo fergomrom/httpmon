@@ -28,3 +28,4 @@ coverage.xml
 junit_results.xml
 coverage/
 .pytest_cache/
+examples/

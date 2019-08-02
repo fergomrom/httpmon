@@ -70,7 +70,6 @@ class TerminalUI:
             current_window.noutrefresh()
 
     def _create_alert_window(self):
-        alert_height = (curses.LINES // 3) - 5
         header = curses.newwin(3, self.window_width, self.window_height + 4, 0)
         header.addstr('Alerts', curses.color_pair(6))
         header.refresh()

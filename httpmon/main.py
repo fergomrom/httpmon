@@ -24,6 +24,17 @@ class HTTPMonCLI:
         self.log_aggregator = LogAggregator(included_metrics)
         self.requests_alert = RequestsAlert(max_requests)
 
+    def _process_log(self):
+        parsed_lines = self.log_file.parse_next_lines()
+        for parsed_line in parsed_lines:
+            self.log_aggregator.add_line(parsed_line)
+            self.requests_alert.add_line(parsed_line)
+
+    def _process_alerts(self):
+        alert_tuple = self.requests_alert.check_alert()
+        if alert_tuple:
+            self.ui.update_alert(alert_tuple)
+
     def start(self):
         continue_running = True
         try:
@@ -48,14 +59,3 @@ class HTTPMonCLI:
         finally:
             self.log_file.end()
             self.ui.end()
-
-    def _process_log(self):
-        parsed_lines = self.log_file.parse_next_lines()
-        for parsed_line in parsed_lines:
-            self.log_aggregator.add_line(parsed_line)
-            self.requests_alert.add_line(parsed_line)
-
-    def _process_alerts(self):
-        alert_tuple = self.requests_alert.check_alert()
-        if alert_tuple:
-            self.ui.update_alert(alert_tuple)

@@ -18,7 +18,8 @@ class MetricOccurences(MetricInterface):
         self.metrics_data = defaultdict(int)
 
     def add_element(self, log_line):
-        self.metrics_data[log_line[self.metric_key]] += 1
+        if self.metric_key in log_line:
+            self.metrics_data[log_line[self.metric_key]] += 1
 
     def get_sorted_data(self):
         return sorted(self.metrics_data.items(), key=lambda x: x[1], reverse=True)
@@ -37,8 +38,9 @@ class MetricPercentage(MetricInterface):
         self.total = 0
 
     def add_element(self, log_line):
-        self.metrics_data[log_line[self.metric_key]] += 1
-        self.total += 1
+        if self.metric_key in log_line:
+            self.metrics_data[log_line[self.metric_key]] += 1
+            self.total += 1
 
     def get_percentages(self):
         return {key: f'{(value / self.total) * 100:.2f}%' for key, value in self.metrics_data.items()}
@@ -77,7 +79,7 @@ class MethodMetric(MetricPercentage):
         self.metric_key = 'method'
 
 
-class SummaryMetric(MetricInterface):
+class MetricSummary(MetricInterface):
     def __init__(self):
         self.metric_key = 'summary'
         self.metrics_data = {
@@ -86,7 +88,8 @@ class SummaryMetric(MetricInterface):
         }
 
     def add_element(self, log_line):
-        self.metrics_data['Total bytes'] += int(log_line['bytes'])
+        if 'bytes' in log_line:
+            self.metrics_data['Total bytes'] += int(log_line['bytes'])
         self.metrics_data['Total requests'] += 1
 
     def export(self):

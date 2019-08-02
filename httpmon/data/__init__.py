@@ -1,6 +1,6 @@
 from httpmon.data.alerts import RequestsAlert
-from httpmon.data.metrics import (HostMetric, MethodMetric, SectionMetric,
-                                  StatusCodeMetric, SummaryMetric)
+from httpmon.data.metrics import (HostMetric, MethodMetric, MetricSummary,
+                                  SectionMetric, StatusCodeMetric)
 
 available_metrics = {
     'section': {
@@ -20,7 +20,7 @@ available_metrics = {
         'description': 'Most seen HTTP methods',
     },
     'summary': {
-        'class': SummaryMetric,
+        'class': MetricSummary,
         'description': 'Summary statistics',
     },
 }
